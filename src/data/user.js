@@ -50,7 +50,8 @@ const validateToken = (_id, callback) => {
     if (doc.active === false) return callback({})
     return callback({
       success: true,
-      _id: doc._id
+      _id: doc._id,
+      lastChangeDate: doc.updatedAt
     })
   })
 }

@@ -3,5 +3,11 @@ module.exports = {
   jwtSession: {
     session: false
   },
-  expirate: 86400
+  expirate: 86400,
+  corsOptions: {
+    origin: '*',
+    exposedHeaders: ['X-total-Count', 'Authorization'],
+    methods: [ 'GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE' ],
+    preflightContinue: false
+  }
 }
