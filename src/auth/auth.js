@@ -13,21 +13,19 @@ const params = {
 }
 
 module.exports = () => {
-  const strategy = new Strategy(params, (payload, done) => {
-    userAPI.getUserPayload(payload._id, (dataObject) => {
-      console.log('dentro do callback')
+  const payloadStrategy = new Strategy(params, (payload, done) => {
+    userAPI.validateToken(payload._id, (dataObject) => {
       return _.isEmpty(dataObject) === false ? done(null, dataObject) : done(null, { success: false })
     })
   })
-
-  passport.use(strategy)
+  console.log('dentro da authenticate')
+  passport.use(payloadStrategy)
 
   return {
     initialize: () => {
       return passport.initialize()
     },
     authenticate: () => {
-      console.log('dentro da authenticate')
       return passport.authenticate('jwt', cfg.jwtSession)
     }
   }

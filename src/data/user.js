@@ -40,6 +40,21 @@ const isValidUser = (email, password, callback) => {
   })
 }
 
+const validateToken = (_id, callback) => {
+  User.findOne({ _id: _id }, (err, doc) => {
+    if (err) {
+      console.log(err)
+      callback({})
+    }
+    if (_.isEmpty(doc)) return callback({})
+    if (doc.active === false) return callback({})
+    return callback({
+      success: true,
+      _id: doc._id
+    })
+  })
+}
+
 const getUserPayload = (_id, callback) => {
   User.findOne({ _id: _id }, (err, doc) => {
     if (err) {
@@ -50,9 +65,9 @@ const getUserPayload = (_id, callback) => {
     if (doc.active === false) return callback({})
     _getUserWorkplaces(doc._id, (workplaces) => {
       return callback({
-        success: true,
         _id: doc._id,
         name: doc.name,
+        email: doc.email,
         active: doc.active,
         admin: doc.admin,
         lastChangeDate: doc.updatedAt,
@@ -74,5 +89,6 @@ const _getUserWorkplaces = (userId, callback) => {
 }
 module.exports = {
   isValidUser,
-  getUserPayload
+  getUserPayload,
+  validateToken
 }

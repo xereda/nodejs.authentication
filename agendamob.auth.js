@@ -13,15 +13,22 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(auth.initialize())
 
 app.get('/', (req, res) => {
-  res.json({ status: 'My API is live!' })
+  res.json({ status: 'API de autenticação nos serviços DocMob.' })
 })
 
-app.get('/usuarios', auth.authenticate(), (req, res) => {
+app.get('/payload', auth.authenticate(), (req, res) => {
+  if (req.user.success === false) return res.sendStatus(401)
+  userAPI.getUserPayload(req.user._id, (object) => {
+    res.json(object)
+  })
+})
+
+app.get('/validate-token', auth.authenticate(), (req, res) => {
   if (req.user.success === false) return res.sendStatus(401)
   res.json(req.user)
 })
 
-app.post('/token', (req, res, next) => {
+app.post('/credential', (req, res, next) => {
   const email = req.body.email
   const password = req.body.password
 
