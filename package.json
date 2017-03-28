@@ -1,0 +1,27 @@
+{
+  "name": "agendamob.auth",
+  "version": "0.0.1",
+  "description": "API Restful para autenticação nos serviços Agendamob",
+  "main": "agendamob.auth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jackson Ricardo Schroeder <jacksonrs@gmail.com> (www.jmob.com.br)",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "jwt-simple": "^0.5.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.9.1",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-standard": "^7.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1"
+  }
+}
