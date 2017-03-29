@@ -44,11 +44,15 @@ app.post('/credential', (req, res, next) => {
       return next()
     }
     const payload = {
-      _id: user,
+      _id: user._id,
       exp: new Date() / 1000 + cfg.expirate
     }
-    const token = jwt.encode(payload, cfg.jwtSecret)
-    res.json({ token })
+    const accessToken = jwt.encode(payload, cfg.jwtSecret)
+    const objectReturn = {
+      accessToken,
+      user
+    }
+    res.json(objectReturn)
   })
 })
 

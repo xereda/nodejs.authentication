@@ -30,13 +30,22 @@ const isValidUser = (email, password, callback) => {
   User.findOne({ email: { $eq: email }, active: true }, (err, doc) => {
     if (err) {
       console.log(err)
-      callback('')
+      callback({})
     }
-    if (_.isEmpty(doc)) return callback('')
+    if (_.isEmpty(doc)) return callback({})
     const compare = bcrypt.compareSync(password, doc.password)
-    if (compare === false) return callback('')
-    console.log('doc._id', doc._id)
-    return callback(doc._id)
+    if (compare === false) return callback({})
+    _getUserWorkplaces(doc._id, (workplaces) => {
+      return callback({
+        _id: doc._id,
+        name: doc.name,
+        email: doc.email,
+        active: doc.active,
+        admin: doc.admin,
+        lastChangeDate: doc.updatedAt,
+        workplaces: workplaces
+      })
+    })
   })
 }
 
@@ -79,7 +88,7 @@ const getUserPayload = (_id, callback) => {
 }
 
 const _getUserWorkplaces = (userId, callback) => {
-  Workplace.find({ users: { $elemMatch: { user: userId } } }, { _id: 1 }, (err, doc) => {
+  Workplace.find({ users: { $elemMatch: { user: userId } } }, { name: 1 }, (err, doc) => {
     if (err) {
       console.log(err)
       callback([])
