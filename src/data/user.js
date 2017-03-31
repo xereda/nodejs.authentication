@@ -33,17 +33,20 @@ const isValidUser = (email, password, callback) => {
       callback({})
     }
     if (_.isEmpty(doc)) return callback({})
-    const compare = bcrypt.compareSync(password, doc.password)
-    if (compare === false) return callback({})
-    _getUserWorkplaces(doc._id, (workplaces) => {
-      return callback({
-        _id: doc._id,
-        name: doc.name,
-        email: doc.email,
-        active: doc.active,
-        admin: doc.admin,
-        lastChangeDate: doc.updatedAt,
-        workplaces: workplaces
+    // const compare = bcrypt.compareSync(password, doc.password)
+    bcrypt.compare(password, doc.password).then(res => {
+      console.log('validou a senha: ', res)
+      if (res === false) return callback({})
+      _getUserWorkplaces(doc._id, (workplaces) => {
+        return callback({
+          _id: doc._id,
+          name: doc.name,
+          email: doc.email,
+          active: doc.active,
+          admin: doc.admin,
+          lastChangeDate: doc.updatedAt,
+          workplaces: workplaces
+        })
       })
     })
   })
