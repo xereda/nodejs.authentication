@@ -3,7 +3,7 @@ module.exports = {
   jwtSession: {
     session: false
   },
-  expirate: 86400,
+  expirate: 31536000, // 1 ano em segundos
   corsOptions: {
     origin: '*',
     exposedHeaders: ['X-total-Count', 'Authorization'],

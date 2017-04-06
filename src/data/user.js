@@ -60,6 +60,13 @@ const validateToken = (_id, callback) => {
     }
     if (_.isEmpty(doc)) return callback({})
     if (doc.active === false) return callback({})
+    // return setTimeout(() => {
+    //   callback({
+    //     success: true,
+    //     _id: doc._id,
+    //     lastChangeDate: doc.updatedAt
+    //   })
+    // }, 11000)
     return callback({
       success: true,
       _id: doc._id,
